@@ -178,8 +178,8 @@ where:
 
 To avoid this, we use a mathematical trick:
 
-- Instead of computing \( S = \tilde{X} \tilde{X}^T \) (size 4096 × 4096),
-- Compute \( \tilde{X}^T \tilde{X} \) (size n × n, much smaller).
+- Instead of computing \( S = **XXᵀ**) (size 4096 × 4096),
+- Compute \( **XᵀX**) (size n × n, much smaller).
 
 ---
 
