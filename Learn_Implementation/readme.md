@@ -1,3 +1,5 @@
+# NEED TO BE MODIFIED!
+
 # EigenFaces with OpenCV – Simplified Example
 
 This example demonstrates face recognition using Eigenfaces computed via OpenCV's PCA functions. The implementation is based on our main code.
