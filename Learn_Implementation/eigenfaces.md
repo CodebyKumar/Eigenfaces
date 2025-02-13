@@ -2,7 +2,7 @@
 
 ## **Why Do We Need Eigenfaces?**
 
-- Images have **high dimensionality** (e.g., a 100×100 grayscale image has **10,000** dimensions).
+- Images have **high dimensionality** (e.g., a 64×64 grayscale image has **4096** dimensions).
 - Not all dimensions are **equally important**; some dimensions capture essential variations such as lighting, pose, and expression.
 - **Principal Component Analysis (PCA)** helps reduce dimensions by identifying key directions of variance, providing a compact representation.
 
@@ -112,8 +112,8 @@ Let's break the **Eigenfaces method** into simpler mathematical steps to fully u
 ### **1. Understanding the Face Data as Vectors**
 
 Each face image is represented as a **vector**.
-If the image size is **p × q**, then it has **pq pixels**.
-For example, a **100 × 100** grayscale image has **10,000 pixels**, so we represent it as a **10,000-dimensional vector**.
+If the image size is **64 × 64**, then it has **4096 pixels**.
+For example, a **64 × 64** grayscale image has **4096 pixels**, so we represent it as a **4096-dimensional vector**.
 
 Let’s say we have **n training images**, we represent them as:
 
@@ -121,7 +121,7 @@ Let’s say we have **n training images**, we represent them as:
 X = [x_1, x_2, ..., x_n]
 ```
 
-where each \( x_i \) is a **column vector of size (pq × 1)**.
+where each \( x_i \) is a **column vector of size (4096 × 1)**.
 
 This forms a **data matrix**:
 
@@ -134,7 +134,7 @@ x_1 & x_2 & \dots & x_n \\
 \end{bmatrix}
 ```
 
-This matrix has size **(pq × n)**, meaning each **column** is a flattened image.
+This matrix has size **(4096 × n)**, meaning each **column** is a flattened image.
 
 ---
 
@@ -174,11 +174,11 @@ S = \frac{1}{n} \tilde{X} \tilde{X}^T
 
 where:
 
-- \( S \) is of size **(pq × pq)**, which is **huge** (e.g., 10,000 × 10,000).
+- \( S \) is of size **(4096 × 4096)**, which is **huge**.
 
 To avoid this, we use a mathematical trick:
 
-- Instead of computing \( S = \tilde{X} \tilde{X}^T \) (size pq × pq),
+- Instead of computing \( S = \tilde{X} \tilde{X}^T \) (size 4096 × 4096),
 - Compute \( \tilde{X}^T \tilde{X} \) (size n × n, much smaller).
 
 ---
@@ -214,7 +214,7 @@ Since **not all Eigenfaces are useful**, we select the top **k** eigenvectors wi
 W = (u_1, u_2, ..., u_k)
 ```
 
-Now, \( W \) is a **pq × k** matrix, where each column is an **Eigenface**.
+Now, \( W \) is a **4096 × k** matrix, where each column is an **Eigenface**.
 
 ---
 
@@ -229,7 +229,7 @@ y_i = W^T \tilde{x}_i
 where:
 
 - \( y_i \) is the **compressed representation** (size \( k \times 1 \)).
-- Instead of storing a **10,000-pixel image**, we only store **k numbers**.
+- Instead of storing a **4096-pixel image**, we only store **k numbers**.
 
 ---
 
@@ -262,10 +262,10 @@ If:
 ## **Final Summary of Steps**
 
 1. **Prepare training images** as column vectors in matrix \( X \).
-2. **Compute the mean face** \( \mu \).
+2. **Compute the mean face** \( \mu \) from 64×64 images (4096 dimensions).
 3. **Center the data** by subtracting \( \mu \).
-4. **Compute the covariance matrix trick** \( \tilde{X}^T \tilde{X} \).
-5. **Find eigenvectors** and get **Eigenfaces**.
+4. **Compute the covariance matrix trick** \( \tilde{X}^T \tilde{X} \) for reduced dimensionality.
+5. **Find eigenvectors** which form the final Eigenfaces.
 6. **Select the top k Eigenfaces** to reduce dimensionality.
 7. **Project faces onto the new space** using \( y = W^T \tilde{x} \).
 8. **Recognize faces** by finding the closest match in the reduced space.
